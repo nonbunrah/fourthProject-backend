@@ -4,7 +4,7 @@ let app = express();
 
 app.use(express.json());
 
-const port = 3000;
+const port = 9000;
 
 // CORS stuff
 app.use(function(req, res, next) {
@@ -18,10 +18,6 @@ app.use(function(req, res, next) {
 app.get('/', (req, res) => {
   res.send('Visit /api/events to see more!');
 });
-
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
-})
 
 // -------------------------------------------------------------------
 // EVENTS ROUTES
@@ -98,7 +94,12 @@ app.delete('/api/events/:id', (req, res) => {
       console.log(new Error('Could not delete event'), error);
       res.sendStatus(500)
     }
-    console.log("Place traveled was successfully deleted")
+    console.log("Event was successfully deleted")
     res.status(200).json({message: "Delete successful!"});
   })
+})
+
+// Start server
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`)
 })
