@@ -57,10 +57,10 @@ app.post('/api/events', (req, res) => {
   console.log(req.body)
   database.run(createNewEvent, reqBody, (error, results) => {
     if (error) {
-      console.log(`Error adding new person ${req.body.eventName}`, error)
+      console.log(`Error adding new event ${req.body.eventName}`, error)
       res.sendStatus(500)
     } else {
-      console.log(`Added new person ${req.body.eventName}`)
+      console.log(`Added new event ${req.body.eventName}`)
       res.sendStatus(200)
     }
   })
