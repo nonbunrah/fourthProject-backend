@@ -36,12 +36,16 @@ app.get('/api/events', (req, res) => {
   })
 })
 
-// Get one event
-app.get('/api/events/:id', (req, res) => {
-  const eventId = req.params.id
-  const getEvent = `SELECT oid, * FROM tblEvents WHERE tblEvents.oid = ?`;
+// Get events by date
+app.get('/api/events/:month/:day/:year', (req, res) => {
+  // const eventMonth = req.params.id
+  const getEvent = `
+  SELECT oid, * FROM tblEvents 
+  WHERE tblEvents.month = ${req.params.month}
+  AND tblEvents.day = ${req.params.day}
+  AND tblEvents.year = ${req.params.year}`;
 
-  database.get(getEvent, [eventId], (error, results) => {
+  database.all(getEvent, (error, results) => {
     if (error) {
       console.log(new Error(`Could not get event`), error);
       res.sendStatus(500);
@@ -50,10 +54,25 @@ app.get('/api/events/:id', (req, res) => {
   })
 });
 
+// Get one event
+app.get('/api/events/:id', (req, res) => {
+  const eventId = req.params.id
+  const getEvent = 
+  `SELECT oid, * FROM tblEvents WHERE tblEventsoid = ?`
+
+  database.get(getEvent), [eventId], (error, results) => {
+    if (error) {
+      console.log(new Error('Could not get book'), error);
+      res.sendStatus(500);
+    }
+    res.status(200).json(results);
+  }
+});
+
 // Create event
 app.post('/api/events', (req, res) => {
-  const reqBody = [req.body.eventName, req.body.eventDescription, req.body.location, req.body.time]
-  const createNewEvent = `INSERT INTO tblEvents VALUES (?, ?, ?, ?)`
+  const reqBody = [req.body.eventName, req.body.eventDescription, req.body.location, req.body.time, req.body.month, req.body.day, req.body.year]
+  const createNewEvent = `INSERT INTO tblEvents VALUES (?, ?, ?, ?, ?, ?, ?)`
   console.log(req.body)
   database.run(createNewEvent, reqBody, (error, results) => {
     if (error) {

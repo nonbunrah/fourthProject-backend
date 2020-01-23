@@ -15,7 +15,10 @@ const createEvents =
   eventName TEXT,
   eventDescription TEXT,
   location TEXT,
-  time TEXT)`;
+  time TEXT,
+  month INTEGER,
+  day INTEGER,
+  year INTEGER)`;
 
 const createUserEvents = 
 `CREATE TABLE IF NOT EXISTS tblUserEvents (
